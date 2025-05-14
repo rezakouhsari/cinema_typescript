@@ -1,0 +1,171 @@
+body {
+    font-family: "Vazir", sans-serif;
+    text-align: center;
+    background-color: #1c1c1c;
+    color: white;
+  }
+  
+  h1 {
+    margin-top: 20px;
+    color: #ffeb3b;
+  }
+  
+  /* نمایش و نورپردازی */
+  .screen-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto 30px;
+    height: 80px;
+    overflow: hidden;
+  }
+  
+  .screen {
+    background-color: #444;
+    color: #fff;
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 2;
+    position: relative;
+  }
+  
+  .light-effect {
+    position: absolute;
+    top: 40px;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    background: radial-gradient(ellipse at top, rgba(255, 255, 255, 0.3), transparent 80%);
+    animation: glow 3s ease-in-out infinite;
+    z-index: 1;
+  }
+  
+  @keyframes glow {
+    0%, 100% {
+      opacity: 0.3;
+    }
+    50% {
+      opacity: 0.7;
+    }
+  }
+  
+  /* سینما */
+  #cinema {
+    display: grid;
+    grid-template-columns: repeat(8, 50px);
+    gap: 10px;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .seat {
+    width: 50px;
+    height: 50px;
+    background-color: #4caf50;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  }
+  
+  .seat:hover {
+    background-color: #45a049;
+  }
+  
+  .seat.reserved {
+    background-color: #aaa;
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+  .actions {
+    margin: 20px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    background-color: #ff9800;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  button:hover {
+    background-color: #e68900;
+  }
+  
+  .seat.selected {
+    background-color: #ffc107 !important;
+  }
+  
+  .invoice {
+    background: white;
+    color: black;
+    margin: 30px auto;
+    max-width: 400px;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: right;
+    font-family: "Vazir", sans-serif;
+  }
+  
+  .invoice h2 {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 10px;
+  }
+  
+  .footer {
+    margin-top: 20px;
+    font-style: italic;
+    text-align: center;
+    color: #444;
+  }
+  
+  .invoice ul li {
+    margin: 4px 0;
+    list-style: disc;
+    color: black;
+    background: none;
+    font-weight: normal;
+    padding: 0;
+    border: none;
+  }
+  .admin-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.admin-actions button {
+  background-color: #607d8b;
+}
+
+.admin-actions button:hover {
+  background-color: #455a64;
+}
+@media print {
+    body * {
+      visibility: hidden; /* همه چیز پنهان شود */
+    }
+  
+    #invoice, #invoice * {
+      visibility: visible; /* فقط فاکتور قابل دیدن و چاپ باشد */
+    }
+  
+    #invoice {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
+  }
+  
+
+  @media print {
+    #print-btn {
+      display: none;
+    }
+  }
+  
