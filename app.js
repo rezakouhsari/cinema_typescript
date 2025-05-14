@@ -64,12 +64,14 @@ class Cinema {
         this.items.push(item);
     }
     getSelectedSeats() {
-        return this.items.filter(i => i.isSelected());
+        return this.items.filter((item) => item.isSelected && item.isSelected());
     }
     render(container) {
-        this.items.forEach(seat => {
-            seat.loadReservedFromStorage();
-            container.appendChild(seat.getElement());
+        this.items.forEach((item) => {
+            if (item.loadReservedFromStorage)
+                item.loadReservedFromStorage();
+            if (item.getElement)
+                container.appendChild(item.getElement());
         });
     }
 }
@@ -93,34 +95,30 @@ document.getElementById("buyButton").addEventListener("click", () => {
     const total = selected.length * TICKET_PRICE;
     const confirmed = confirm(`شما ${selected.length} صندلی انتخاب کرده‌اید.\nمبلغ قابل پرداخت: ${total.toLocaleString()} تومان\nآیا ادامه می‌دهید؟`);
     if (confirmed) {
-        // ذخیره و رزرو
         selected.forEach(seat => {
             seat.reserve();
             seat.saveToStorage();
         });
-        // نمایش فاکتور
         const invoice = document.getElementById("invoice");
         const invoiceDetails = document.getElementById("invoice-details");
         invoiceDetails.innerHTML = `
-        <p>مبلغ نهایی: <strong>${total.toLocaleString()} تومان</strong></p>
-        <p>صندلی‌های رزرو شده:</p>
-        <ul>
-          ${selected.map(s => `<li>ردیف ${s.getInfo().row} - شماره ${s.getInfo().number}</li>`).join("")}
-        </ul>
-      `;
+      <p>مبلغ نهایی: <strong>${total.toLocaleString()} تومان</strong></p>
+      <p>صندلی‌های رزرو شده:</p>
+      <ul>
+        ${selected.map(s => `<li>ردیف ${s.getInfo().row} - شماره ${s.getInfo().number}</li>`).join("")}
+      </ul>
+    `;
         invoice.style.display = "block";
     }
 });
-// دکمه پاک‌سازی
 document.getElementById("clearStorageButton").addEventListener("click", () => {
     const confirmed = confirm("آیا مطمئن هستید که می‌خواهید تمام اطلاعات رزرو را پاک کنید؟");
     if (confirmed) {
         localStorage.clear();
         alert("اطلاعات با موفقیت حذف شد. در حال بازنشانی صفحه...");
-        location.reload(); // ریفرش کامل برای بارگذاری مجدد صندلی‌ها
+        location.reload();
     }
 });
-// دکمه نمایش فروش
 document.getElementById("showSalesButton").addEventListener("click", () => {
     let count = 0;
     for (let i = 1; i <= 5; i++) {
